@@ -40,8 +40,7 @@ const BirthdaySlideshow = () => {
     sparkles,
     createConfetti,
     createHearts,
-    createSparkles,
-    startAllEffects
+    createSparkles
   } = useEffects();
   
 
