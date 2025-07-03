@@ -19,6 +19,28 @@ Una aplicación web para crear presentaciones mágicas de cumpleaños con fotos 
 - **Google Drive API** - Integración con Google Drive
 - **Lucide React** - Iconos
 
+## 🏗️ Arquitectura
+
+La aplicación está estructurada de forma modular para facilitar el mantenimiento y escalabilidad:
+
+```
+src/
+├── components/          # Componentes React reutilizables
+│   ├── Auth/           # Pantalla de autenticación
+│   ├── FolderSelection/ # Selección de carpetas
+│   ├── Slideshow/      # Componentes del slideshow
+│   └── Effects/        # Efectos especiales
+├── hooks/              # Custom hooks para lógica reutilizable
+│   ├── useGoogleAPI.js    # Inicialización de Google API
+│   ├── useGoogleAuth.js   # Autenticación
+│   ├── useGoogleDrive.js  # Operaciones de Drive
+│   ├── useEffects.js      # Gestión de efectos
+│   └── useSlideshow.js    # Lógica del slideshow
+├── config/             # Configuración y constantes
+├── utils/              # Utilidades y helpers
+└── App.jsx            # Componente principal (107 líneas)
+```
+
 ## 🚀 Instalación y Deploy
 
 ### Desarrollo Local
@@ -129,13 +151,39 @@ VITE_GOOGLE_API_KEY=tu_api_key_aqui
 
 ## 🌟 Características Técnicas
 
+### Arquitectura Modular
+- **Separación de responsabilidades**: Cada componente tiene una función específica
+- **Custom hooks**: Lógica reutilizable separada de la UI
+- **Componentes pequeños**: Fáciles de mantener y testear
+- **App.jsx limpio**: Solo 107 líneas vs 1000+ líneas originales
+
+### Rendimiento y UX
 - **Manejo de errores**: Fallbacks automáticos para imágenes que no cargan
 - **Optimización**: Uso de thumbnails de alta calidad (1600px)
 - **Responsive**: Funciona en desktop, tablet y móvil
 - **Accesibilidad**: Controles de teclado y navegación intuitiva
 
+### Escalabilidad
+- **Hooks reutilizables**: `useGoogleAPI`, `useGoogleAuth`, `useGoogleDrive`, etc.
+- **Componentes modulares**: Fácil añadir nuevas pantallas o efectos
+- **Configuración centralizada**: Constantes en archivos separados
+- **Utils compartidos**: Funciones de utilidad reutilizables
+
 ## 🤝 Contribuir
 
+La arquitectura modular hace que contribuir sea fácil:
+
+### Añadir nuevos efectos
+1. Crea un componente en `src/components/Effects/`
+2. Añade la lógica en `src/hooks/useEffects.js`
+3. Actualiza `EffectsContainer.jsx`
+
+### Añadir nuevas pantallas
+1. Crea componentes en `src/components/NuevaPantalla/`
+2. Añade la lógica en un custom hook si es necesario
+3. Integra en `App.jsx`
+
+### Proceso de desarrollo
 1. Fork el proyecto
 2. Crea una rama para tu funcionalidad (`git checkout -b feature/nueva-funcionalidad`)
 3. Commit tus cambios (`git commit -m 'Añadir nueva funcionalidad'`)
@@ -148,13 +196,27 @@ Este proyecto está bajo la Licencia MIT. Ve el archivo `LICENSE` para más deta
 
 ## 🎯 Roadmap
 
+### Nuevas funcionalidades
 - [ ] Soporte para videos
-- [ ] Más efectos especiales personalizables
 - [ ] Música de fondo
 - [ ] Modo pantalla completa
 - [ ] Compartir slideshow por enlace
 - [ ] Integración con otros servicios de almacenamiento
 
+### Mejoras técnicas
+- [ ] Tests unitarios para componentes
+- [ ] Tests de integración para hooks
+- [ ] Storybook para documentar componentes
+- [ ] TypeScript migration
+- [ ] Performance monitoring
+- [ ] Lazy loading de componentes
+
+### Efectos especiales
+- [ ] Más tipos de partículas personalizables
+- [ ] Transiciones entre imágenes
+- [ ] Filtros y efectos de imagen
+- [ ] Modo presentación automática
+
 ---
 
-¡Hecho con ❤️ para celebrar momentos especiales!# Test deploy
+¡Hecho con ❤️ para celebrar momentos especiales!
