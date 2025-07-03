@@ -46,7 +46,7 @@ const BirthdaySlideshow = () => {
   } = useEffects();
   
   // Slideshow logic
-  const { currentImageIndex, setCurrentImageIndex } = useSlideshow(images, startAllEffects);
+  const { currentImageIndex } = useSlideshow(images, startAllEffects);
 
   // Auto-load folders when authenticated
   React.useEffect(() => {
