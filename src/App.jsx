@@ -46,18 +46,20 @@ const BirthdaySlideshow = () => {
           return;
         }
 
-        // Verificar si estamos en localhost o dominio autorizado
+        // Verificar si estamos en un dominio autorizado
         const hostname = window.location.hostname;
-        const isLocalhost = hostname === 'localhost' || 
-                           hostname === '127.0.0.1' || 
-                           hostname.includes('localhost');
+        const isAuthorizedDomain = hostname === 'localhost' || 
+                                  hostname === '127.0.0.1' || 
+                                  hostname.includes('localhost') ||
+                                  hostname.includes('vercel.app') ||
+                                  hostname.includes('netlify.app');
         
         console.log('Current hostname:', hostname);
-        console.log('Is localhost:', isLocalhost);
+        console.log('Is authorized domain:', isAuthorizedDomain);
         
-        if (!isLocalhost) {
-          setAuthError('Esta aplicación requiere ejecutarse en localhost para acceder a Google Drive');
-          setDebugInfo('Dominio actual: ' + hostname + ' - Se requiere localhost');
+        if (!isAuthorizedDomain) {
+          setAuthError('Esta aplicación requiere ejecutarse en un dominio autorizado para acceder a Google Drive');
+          setDebugInfo('Dominio actual: ' + hostname + ' - Dominio no autorizado');
           showAlternativeOptions();
           return;
         }

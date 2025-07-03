@@ -85,8 +85,12 @@ Para usar la aplicación necesitas configurar las credenciales de Google Drive A
 1. Ve a **Credenciales** → **Crear credenciales** → **ID de cliente OAuth 2.0**
 2. Configura los orígenes JavaScript autorizados:
    - `http://localhost:3000` (para desarrollo)
-   - Tu dominio de producción
+   - `http://localhost:5173` (para Vite dev server)
+   - `https://tu-app.vercel.app` (tu dominio de Vercel)
+   - Tu dominio personalizado (si tienes uno)
 3. Copia el **Client ID** y **API Key**
+
+**Importante**: Después del deploy a Vercel, debes añadir tu URL de producción a los orígenes autorizados en Google Cloud Console para que funcione correctamente.
 
 ### 3. Variables de entorno
 Añade las credenciales a tu archivo `.env`:
