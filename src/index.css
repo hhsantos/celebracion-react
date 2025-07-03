@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+/* Test styles */
+.test-gradient {
+  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #6366f1 100%);
+}
+
+.test-padding {
+  padding: 2rem;
+}
+
+.test-text {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
