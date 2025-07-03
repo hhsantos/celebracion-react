@@ -9,8 +9,8 @@ const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/res
 const SCOPES = 'https://www.googleapis.com/auth/drive.readonly';
 
 // Variables globales para Google API
-let gapi;
-let google;
+let _gapi;
+let _google;
 
 const BirthdaySlideshow = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -30,7 +30,6 @@ const BirthdaySlideshow = () => {
   const [debugInfo, setDebugInfo] = useState('');
     
   const intervalRef = useRef(null);
-  const canvasRef = useRef(null);
 
 
   // Inicializar Google API
