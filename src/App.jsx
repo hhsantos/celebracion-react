@@ -3,7 +3,6 @@ import { useGoogleAPI } from './hooks/useGoogleAPI.js';
 import { useGoogleAuth } from './hooks/useGoogleAuth.js';
 import { useGoogleDrive } from './hooks/useGoogleDrive.js';
 import { useEffects } from './hooks/useEffects.js';
-import { useSlideshow } from './hooks/useSlideshow.js';
 
 import AuthScreen from './components/Auth/AuthScreen.jsx';
 import FolderSelectionScreen from './components/FolderSelection/FolderSelectionScreen.jsx';
@@ -45,8 +44,6 @@ const BirthdaySlideshow = () => {
     startAllEffects
   } = useEffects();
   
-  // Slideshow logic
-  const { currentImageIndex } = useSlideshow(images, startAllEffects);
 
   // Auto-load folders when authenticated
   React.useEffect(() => {
