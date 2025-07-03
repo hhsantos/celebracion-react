@@ -3,6 +3,8 @@ import EffectsContainer from '../Effects/EffectsContainer.jsx';
 import SlideshowControls from './SlideshowControls.jsx';
 import SettingsPanel from './SettingsPanel.jsx';
 import ProgressBar from './ProgressBar.jsx';
+import AICommentOverlay from './AICommentOverlay.jsx';
+import { useAIComments } from '../../hooks/useAIComments.js';
 import { DEFAULT_SLIDE_SPEED } from '../../config/constants.js';
 
 const SlideshowScreen = ({ 
@@ -20,25 +22,56 @@ const SlideshowScreen = ({
   const [showSettings, setShowSettings] = useState(false);
   const intervalRef = useRef(null);
 
+  // AI Comments functionality
+  const {
+    currentComment,
+    isCommentVisible,
+    isEnabled: aiCommentsEnabled,
+    generateComment,
+    hideComment,
+    toggleEnabled: toggleAIComments
+  } = useAIComments({
+    enabled: true,
+    delay: 2500, // 2.5 segundos después de cambiar imagen
+    autoHide: true,
+    hideDelay: 6000, // 6 segundos antes de ocultar
+    position: 'bottom-left'
+  });
+
   // Control del slideshow
   useEffect(() => {
     if (isPlaying && images.length > 0) {
       intervalRef.current = setInterval(() => {
-        setCurrentImageIndex((prev) => (prev + 1) % images.length);
+        setCurrentImageIndex((prev) => {
+          const newIndex = (prev + 1) % images.length;
+          generateComment(newIndex, images.length);
+          return newIndex;
+        });
       }, slideSpeed);
     } else {
       clearInterval(intervalRef.current);
     }
     
     return () => clearInterval(intervalRef.current);
-  }, [isPlaying, slideSpeed, images.length]);
+  }, [isPlaying, slideSpeed, images.length, generateComment]);
+
+  // Generar comentario para la primera imagen al cargar
+  useEffect(() => {
+    if (images.length > 0 && currentImageIndex === 0) {
+      generateComment(0, images.length);
+    }
+  }, [images.length, currentImageIndex, generateComment]);
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    const newIndex = (currentImageIndex + 1) % images.length;
+    setCurrentImageIndex(newIndex);
+    generateComment(newIndex, images.length);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    const newIndex = (currentImageIndex - 1 + images.length) % images.length;
+    setCurrentImageIndex(newIndex);
+    generateComment(newIndex, images.length);
   };
 
   const togglePlayPause = () => {
@@ -106,6 +139,8 @@ const SlideshowScreen = ({
           onCreateConfetti={createConfetti}
           onCreateHearts={createHearts}
           onCreateSparkles={createSparkles}
+          aiCommentsEnabled={aiCommentsEnabled}
+          onToggleAIComments={toggleAIComments}
         />
       )}
 
@@ -113,6 +148,14 @@ const SlideshowScreen = ({
       <ProgressBar 
         currentIndex={currentImageIndex} 
         totalImages={images.length} 
+      />
+
+      {/* Comentarios de IA */}
+      <AICommentOverlay
+        comment={currentComment}
+        isVisible={isCommentVisible && aiCommentsEnabled}
+        onDismiss={hideComment}
+        position="bottom-left"
       />
 
       <style jsx>{`

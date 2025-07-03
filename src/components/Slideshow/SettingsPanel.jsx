@@ -5,7 +5,9 @@ const SettingsPanel = ({
   onSlideSpeedChange, 
   onCreateConfetti, 
   onCreateHearts, 
-  onCreateSparkles 
+  onCreateSparkles,
+  aiCommentsEnabled,
+  onToggleAIComments
 }) => {
   return (
     <div className="absolute top-8 right-8 bg-black bg-opacity-80 backdrop-blur-sm rounded-lg p-6 text-white min-w-64">
@@ -28,6 +30,29 @@ const SettingsPanel = ({
         </span>
       </div>
       
+      <div className="mb-4">
+        <label className="flex items-center justify-between text-sm font-medium mb-2">
+          <span>Comentarios de IA</span>
+          <button
+            onClick={onToggleAIComments}
+            className={`
+              relative inline-flex h-6 w-11 items-center rounded-full transition-colors
+              ${aiCommentsEnabled ? 'bg-blue-600' : 'bg-gray-600'}
+            `}
+          >
+            <span
+              className={`
+                inline-block h-4 w-4 transform rounded-full bg-white transition-transform
+                ${aiCommentsEnabled ? 'translate-x-6' : 'translate-x-1'}
+              `}
+            />
+          </button>
+        </label>
+        <p className="text-xs text-gray-300">
+          {aiCommentsEnabled ? 'Los comentarios aparecerán automáticamente' : 'Los comentarios están desactivados'}
+        </p>
+      </div>
+
       <div className="space-y-2">
         <button
           onClick={onCreateConfetti}
